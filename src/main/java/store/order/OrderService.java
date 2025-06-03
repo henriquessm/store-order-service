@@ -51,16 +51,22 @@ public class OrderService {
     }
 
     public Order findById(String id) {
-        Order order = orderRepository.findById(id).get().to();
-        List<Item> items = StreamSupport
-            .stream(itemRepository.findByIdOrder(id).spliterator(), false)
-            .map(ItemModel::to)
-            .toList();
-        order.items(items);
-        
-        logger.debug("Order found: " + order);
-        return order;   
+    Order order = orderRepository.findById(id).get().to();
+    List<Item> items = StreamSupport
+        .stream(itemRepository.findByIdOrder(id).spliterator(), false)
+        .map(ItemModel::to)
+        .toList();
+
+    items.forEach(i -> {
+        ProductOut prod = productController.findById(i.product().id()).getBody();
+        i.product(prod);
+    });
+
+    order.items(items);
+
+    return order;
     }
+
 
     public List<Order> findAll(String idAccount) {
         
