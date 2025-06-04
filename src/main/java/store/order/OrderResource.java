@@ -42,8 +42,6 @@ public class OrderResource implements OrderController {
     public ResponseEntity<OrderOut> findById(String id, String idAccount) {
         Order order = orderService.findById(id);
 
-        logger.debug("Order resource: " + order);
-        logger.debug("Account id: " + idAccount);
         
         if (!order.account().id().equals(idAccount)) {
             logger.debug("Order not found for account: " + idAccount);

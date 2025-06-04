@@ -69,12 +69,12 @@ public class OrderService {
 
 
     public List<Order> findAll(String idAccount) {
-        
-        return StreamSupport
-            .stream(orderRepository.findByIdAccount(idAccount).spliterator(), false)
-            .map(OrderModel::to)
-            .toList();
-    }
+    return StreamSupport
+        .stream(orderRepository.findByIdAccount(idAccount).spliterator(), false)
+        .map(OrderModel::to)
+        .toList();
+}
+
 
 
 }
